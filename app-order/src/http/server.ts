@@ -1,10 +1,10 @@
-// import '@opentelemetry/auto-instrumentations-node/register'
+import '@opentelemetry/auto-instrumentations-node/register'
 
 import { fastify } from 'fastify'
 import { randomUUID } from 'node:crypto'
-// import { setTimeout } from 'node:timers/promises'
+import { setTimeout } from 'node:timers/promises'
 import { fastifyCors } from '@fastify/cors'
-// import { trace } from '@opentelemetry/api'
+import { trace } from '@opentelemetry/api'
 import { z } from 'zod'
 import {
   serializerCompiler,
@@ -16,8 +16,7 @@ import { channels } from '../broker/channels/index.ts'
 import { schema } from '../db/schema/index.ts'
 import { db } from '../db/client.ts'
 import { dispatchOrderCreated } from '../broker/messages/order-created.ts'
-// import { dispatchOrderCreated } from '../broker/messages/order-created.ts'
-// import { tracer } from '../tracer/tracer.ts'
+import { tracer } from '../tracer/tracer.ts'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -42,8 +41,6 @@ app.post(
   async (request, reply) => {
     const { amount } = request.body
 
-    console.log('Sending order to the queue')
-
     console.log('Creating an order with amount', amount)
 
     const orderId = randomUUID()
@@ -54,15 +51,15 @@ app.post(
     //   amount
     // })
 
-    // const span = tracer.startSpan('eu acho que aqui ta dando merda')
+    const span = tracer.startSpan('eu acho que aqui ta dando merda')
 
-    // span.setAttribute('teste', 'Hello World')
+    span.setAttribute('teste', 'Hello Alisson')
 
-    // await setTimeout(2000)
+    await setTimeout(2000)
 
-    // span.end()
+    span.end()
 
-    // trace.getActiveSpan()?.setAttribute('order_id', orderId)
+    trace.getActiveSpan()?.setAttribute('order_id', orderId)
 
     dispatchOrderCreated({
       orderId,
