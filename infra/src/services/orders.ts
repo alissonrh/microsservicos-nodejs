@@ -44,7 +44,7 @@ export const ordersService = new awsx.classic.ecs.FargateService(
           {
             name: 'DATABASE_URL',
             value:
-              'postgresql://orders_owner:npg_2HJDijpoCS6Y@ep-dry-cherry-a4lqrlkn.us-east-1.aws.neon.tech/orders?sslmode=require'
+              'postgresql://orders_owner:npg_3hfP5LZxulCO@ep-dark-lake-a4hf4csj.us-east-1.aws.neon.tech/orders?sslmode=require'
           },
           {
             name: 'OTEL_TRACES_EXPORTER',
@@ -57,7 +57,7 @@ export const ordersService = new awsx.classic.ecs.FargateService(
           {
             name: 'OTEL_EXPORTER_OTLP_HEADERS',
             value:
-              'Authorization=Basic MTI4MDc4MDpnbGNfZXlKdklqb2lNVFExTURrMU9DSXNJbTRpT2lKemRHRmpheTB4TWpnd056Z3dMVzkwWld3dGIyNWliMkZ5WkdsdVp5MWxkbVZ1ZEc4dGJtOWtaV3B6SWl3aWF5STZJbWhVYVRWd1dVVXhiVkV5TVU5eE5qYzNaak0xTlZwa2FpSXNJbTBpT25zaWNpSTZJbkJ5YjJRdGMyRXRaV0Z6ZEMweEluMTk='
+              'Authorization=Basic MTI4NjU3MDpnbGNfZXlKdklqb2lNVFExTmpBMk15SXNJbTRpT2lKbmNtRm1ZVzVoTFc1dlpHVnFjeUlzSW1zaU9pSkhNMlpCYlRnMGFsbFRZMVl3VXpjemVEUTFVbUUxTlhZaUxDSnRJanA3SW5JaU9pSndjbTlrTFhOaExXVmhjM1F0TVNKOWZRPT0='
           },
           {
             name: 'OTEL_SERVICE_NAME',
@@ -66,7 +66,7 @@ export const ordersService = new awsx.classic.ecs.FargateService(
           {
             name: 'OTEL_RESOURCE_ATTRIBUTES',
             value:
-              'service.name=orders,service.namespace=eventonodejs,deployment.environment=production'
+              'service.name=my-app,service.namespace=my-application-group,deployment.environment=production'
           },
           {
             name: 'OTEL_NODE_RESOURCE_DETECTORS',
