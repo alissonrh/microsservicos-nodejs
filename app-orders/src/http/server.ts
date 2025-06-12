@@ -17,6 +17,7 @@ import { schema } from '../db/schema/index.ts'
 import { db } from '../db/client.ts'
 import { dispatchOrderCreated } from '../broker/messages/order-created.ts'
 import { tracer } from '../tracer/tracer.ts'
+import { orders } from '../db/schema/orders.ts'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -34,42 +35,41 @@ app.post(
   {
     schema: {
       body: z.object({
-        amount: z.coerce.number()
+        amount: z.number()
       })
     }
   },
   async (request, reply) => {
-    const { amount } = request.body
+    try {
+      const { amount } = request.body
 
-    console.log('Creating an order with amount', amount)
+      console.log('Creating an order with amount', amount)
 
-    const orderId = randomUUID()
+      const orderId = randomUUID()
 
-    // await db.insert(schema.orders).values({
-    //   id: orderId,
-    //   customerId: 'B9176D35-7276-4255-A323-D825CAEE03B5',
-    //   amount
-    // })
+      const span = tracer.startSpan('order_creation')
+      span.setAttribute('amount', amount)
+      span.setAttribute('order_id', orderId)
 
-    const span = tracer.startSpan('eu acho que aqui ta dando merda')
+      // Aqui deve estar sua inserção no banco
+      await db.insert(orders).values({
+        id: orderId,
+        amount,
+        customerId: 'B9176D35-7276-4255-A323-D825CAEE03B5',
+        createdAt: new Date()
+      })
 
-    span.setAttribute('teste', 'Hello Alisson')
+      span.end()
 
-    await setTimeout(2000)
-
-    span.end()
-
-    trace.getActiveSpan()?.setAttribute('order_id', orderId)
-
-    dispatchOrderCreated({
-      orderId,
-      amount,
-      customer: {
-        id: 'B9176D35-7276-4255-A323-D825CAEE03B5'
-      }
-    })
-
-    return reply.status(201).send()
+      return reply.status(201).send({
+        id: orderId,
+        amount,
+        createdAt: new Date().toISOString()
+      })
+    } catch (error) {
+      console.error('Erro ao criar pedido:', error)
+      return reply.status(500).send({ error: 'Erro ao criar pedido' })
+    }
   }
 )
 

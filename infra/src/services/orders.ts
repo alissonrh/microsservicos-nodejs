@@ -7,7 +7,7 @@ import { ordersDockerImage } from '../images/orders'
 import { appLoadBalancer } from '../load-balancer'
 
 const ordersTargetGroup = appLoadBalancer.createTargetGroup('orders-target', {
-  port: 3333,
+  port: 3334,
   protocol: 'HTTP',
   healthCheck: {
     path: '/health',
@@ -18,7 +18,7 @@ const ordersTargetGroup = appLoadBalancer.createTargetGroup('orders-target', {
 export const ordersHttpListener = appLoadBalancer.createListener(
   'orders-listener',
   {
-    port: 3333,
+    port: 3334,
     protocol: 'HTTP',
     targetGroup: ordersTargetGroup
   }
