@@ -25,8 +25,8 @@ services:
       KONG_DECLARATIVE_CONFIG: '/kong/config.yaml'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
-    volumes:
-      - './docker/kong/config.yaml:/kong/config.yaml'
+    # volumes:
+    #   - './docker/kong/config.yaml:/kong/config.yaml'
     ports:
       - '8000:8000' # Proxy (API)
       - '8001:8001' # API (Admin)

@@ -1,0 +1,5 @@
+db orders 
+postgresql://orders_owner:npg_3hfP5LZxulCO@ep-dark-lake-a4hf4csj.us-east-1.aws.neon.tech/orders?sslmode=require
+
+db invoices
+postgresql://invoices_owner:npg_PgxaCd07Mkbe@ep-dark-silence-a4a9ys20.us-east-1.aws.neon.tech/invoices?sslmode=require
